@@ -8,6 +8,10 @@ import com.nuitblanche.triple.domain.user.User;
 import com.nuitblanche.triple.domain.user.UserRepository;
 import com.nuitblanche.triple.dto.TravelCreateRequestDto;
 import com.nuitblanche.triple.dto.TravelCreateResponseDto;
+import com.nuitblanche.triple.exception.CCityNotFoundException;
+import com.nuitblanche.triple.exception.CDuplicatedTravelException;
+import com.nuitblanche.triple.exception.CInvalidDateException;
+import com.nuitblanche.triple.exception.CUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,20 +30,20 @@ public class TravelService {
     public TravelCreateResponseDto createTravel(TravelCreateRequestDto requestDto){
 
         User user = userRepository.findById(requestDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("user not found id : " + requestDto.getUserId()));
+                .orElseThrow(() -> new CUserNotFoundException("user not found id : " + requestDto.getUserId()));
 
         City city = cityRepository.findById(requestDto.getCityId())
-                .orElseThrow(() -> new IllegalArgumentException("city not found id : " + requestDto.getCityId()));
+                .orElseThrow(() -> new CCityNotFoundException("city not found id : " + requestDto.getCityId()));
 
         boolean isValid = isValidDate(requestDto);
         if(!isValid){
-            throw new IllegalArgumentException("not valid start date or end date.");
+            throw new CInvalidDateException("not valid start date or end date.");
         }
 
         Long travelCount = travelRepository.countByUserIdAndCityId(requestDto.getUserId(), requestDto.getCityId());
 
         if(travelCount != 0) {
-            throw new IllegalArgumentException("already travel exists. user id : " +  requestDto.getUserId()
+            throw new CDuplicatedTravelException("already travel exists. user id : " +  requestDto.getUserId()
                     + " city id :" + requestDto.getCityId());
         }
 
