@@ -124,7 +124,6 @@ public class CityRepositoryFindByOneLookedUpWithInWeekTest {
         List<City> cities = cityRepository.findByOneLookedUpWithInWeek(user.getId(),weekAgo,now);
         assertThat(cities.size()).isEqualTo(2);
         assertThat(cities.get(0).getName()).isEqualTo(seoul);
-
     }
 
     @Test
