@@ -2,18 +2,14 @@ package com.nuitblanche.triple.citycontroller;
 
 import com.nuitblanche.triple.domain.city.City;
 import com.nuitblanche.triple.domain.city.CityRepository;
-import com.nuitblanche.triple.domain.user.User;
 import com.nuitblanche.triple.dto.CityCreateRequestDto;
 import com.nuitblanche.triple.dto.CityCreateResponseDto;
-import com.nuitblanche.triple.dto.UserCreateRequestDto;
-import com.nuitblanche.triple.dto.UserCreateResponseDto;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestComponent;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
