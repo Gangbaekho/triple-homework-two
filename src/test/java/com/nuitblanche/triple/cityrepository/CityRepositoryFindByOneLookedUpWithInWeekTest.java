@@ -127,6 +127,38 @@ public class CityRepositoryFindByOneLookedUpWithInWeekTest {
 
     }
 
+    @Test
+    public void 최근_일주일_단건조회된_도시들_없는경우(){
+
+        String tokyo = "tokyo";
+        String seoul = "seoul";
+
+        User user = userRepository.findAll().get(0);
+
+        City tokyoCity = cityRepository.findByName(tokyo)
+                .orElseThrow(() -> new IllegalArgumentException("not found city name : " + tokyo));
+
+        City seoulCity = cityRepository.findByName(seoul)
+                .orElseThrow(() -> new IllegalArgumentException("not found city name : " + seoul));
+
+        CityLookUpHistory historyOne =  new CityLookUpHistory();
+        historyOne.updateUser(user);
+        historyOne.updateCity(tokyoCity);
+
+        cityLookUpHistoryRepository.save(historyOne);
+
+        CityLookUpHistory historyTwo =  new CityLookUpHistory();
+        historyTwo.updateUser(user);
+        historyTwo.updateCity(seoulCity);
+
+        cityLookUpHistoryRepository.save(historyTwo);
+
+        LocalDate now = LocalDate.now().plusDays(8L);
+        LocalDate weekAgo = now.minusDays(7L);
+        List<City> cities = cityRepository.findByOneLookedUpWithInWeek(user.getId(),weekAgo,now);
+        assertThat(cities.size()).isEqualTo(0);
+    }
+
     @After
     public void cleanup(){
 
