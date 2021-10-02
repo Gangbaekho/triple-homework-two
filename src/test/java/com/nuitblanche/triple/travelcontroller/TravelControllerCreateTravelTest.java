@@ -6,8 +6,6 @@ import com.nuitblanche.triple.domain.travel.Travel;
 import com.nuitblanche.triple.domain.travel.TravelRepository;
 import com.nuitblanche.triple.domain.user.User;
 import com.nuitblanche.triple.domain.user.UserRepository;
-import com.nuitblanche.triple.dto.CityCreateRequestDto;
-import com.nuitblanche.triple.dto.CityCreateResponseDto;
 import com.nuitblanche.triple.dto.TravelCreateRequestDto;
 import com.nuitblanche.triple.dto.TravelCreateResponseDto;
 import org.junit.After;
