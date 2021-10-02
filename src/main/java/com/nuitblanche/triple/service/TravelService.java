@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @RequiredArgsConstructor
 @Service
 public class TravelService {
@@ -28,6 +30,11 @@ public class TravelService {
 
         City city = cityRepository.findById(requestDto.getCityId())
                 .orElseThrow(() -> new IllegalArgumentException("city not found id : " + requestDto.getCityId()));
+
+        boolean isValid = isValidDate(requestDto);
+        if(!isValid){
+            throw new IllegalArgumentException("not valid start date or end date.");
+        }
 
         Long travelCount = travelRepository.countByUserIdAndCityId(requestDto.getUserId(), requestDto.getCityId());
 
@@ -47,6 +54,29 @@ public class TravelService {
         travelRepository.save(travel);
 
         return new TravelCreateResponseDto(travel);
+    }
+
+    private boolean isValidDate(TravelCreateRequestDto requestDto){
+
+        LocalDate now = LocalDate.now();
+        LocalDate startDate = requestDto.getStartDate();
+        LocalDate endDate = requestDto.getEndDate();
+
+        boolean isValid = true;
+
+        if(startDate.isBefore(now)){
+            isValid = false;
+        }
+
+        if(endDate.isBefore(now)){
+            isValid = false;
+        }
+
+        if(startDate.isAfter(endDate)){
+            isValid = false;
+        }
+
+        return isValid;
     }
 
 }
