@@ -29,6 +29,13 @@ public class TravelService {
         City city = cityRepository.findById(requestDto.getCityId())
                 .orElseThrow(() -> new IllegalArgumentException("city not found id : " + requestDto.getCityId()));
 
+        Long travelCount = travelRepository.countByUserIdAndCityId(requestDto.getUserId(), requestDto.getCityId());
+
+        if(travelCount != 0) {
+            throw new IllegalArgumentException("already travel exists. user id : " +  requestDto.getUserId()
+                    + " city id :" + requestDto.getCityId());
+        }
+
         Travel travel = Travel.builder()
                 .startDate(requestDto.getStartDate())
                 .endDate(requestDto.getEndDate())
