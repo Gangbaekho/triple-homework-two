@@ -5,7 +5,6 @@ import com.nuitblanche.triple.domain.user.UserRepository;
 import com.nuitblanche.triple.dto.UserCreateRequestDto;
 import com.nuitblanche.triple.dto.UserCreateResponseDto;
 import com.nuitblanche.triple.exception.CUserAlreadyExistsException;
-import com.nuitblanche.triple.exception.CUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

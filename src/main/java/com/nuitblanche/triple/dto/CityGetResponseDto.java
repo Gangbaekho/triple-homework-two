@@ -15,4 +15,12 @@ public class CityGetResponseDto {
         this.id = city.getId();
         this.name = city.getName();
     }
+
+    @Override
+    public String toString() {
+        return "CityGetResponseDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

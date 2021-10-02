@@ -73,7 +73,7 @@ public class CityService {
             List<City> registeredCitiesWithInOneWeek = cityRepository.findRegisteredCitiesWithInOneWeek(now.minusDays(7), now);
             registeredCitiesWithInOneWeek.stream()
                     .forEach(city -> {
-                        if(cities.size () <= CITY_AMOUNT){
+                        if(cities.size () < CITY_AMOUNT){
                             cities.add(city);
                         }
                     });
@@ -83,7 +83,7 @@ public class CityService {
             List<City> oneSearchedCitiesWithInOneWeek = cityRepository.findByOneLookedUpWithInWeek(requestDto.getUserId(),now.minusDays(7),now);
             oneSearchedCitiesWithInOneWeek.stream()
                     .forEach(city -> {
-                        if(cities.size () <= CITY_AMOUNT){
+                        if(cities.size () < CITY_AMOUNT && !cities.contains(city)){
                             cities.add(city);
                         }
                     });
@@ -99,7 +99,7 @@ public class CityService {
             List<City> citiesNotInList = cityRepository.findNotInList(cityIds,pageable);
             citiesNotInList.stream()
                     .forEach(city -> {
-                        if(cities.size () <= CITY_AMOUNT){
+                        if(cities.size () < CITY_AMOUNT){
                             cities.add(city);
                         }
                     });
