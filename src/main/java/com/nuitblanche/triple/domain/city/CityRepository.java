@@ -1,5 +1,6 @@
 package com.nuitblanche.triple.domain.city;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +15,10 @@ public interface CityRepository extends JpaRepository<City,Long> {
 
     Optional<City> findByName(String name);
 
-    @Query(value = "SELECT c FROM City c WHERE cast(c.createdDate as LocalDate) >=:sevenDaysAgo ORDER BY c.createdAt ASC")
-    List<City> findRegisteredCitiesWithInOneWeek(@Param("sevenDaysAgo") LocalDate sevenDaysAgo);
+    @Query(value = "SELECT c FROM City c WHERE cast(c.createdDate as LocalDate) >=:weekAgo ORDER BY c.createdAt ASC")
+    List<City> findRegisteredCitiesWithInOneWeek(@Param("weekAgo") LocalDate weekAgo);
+
+    @Query(value = "SELECT c FROM City c WHERE c.id NOT IN (:cityIds)")
+    List<City> findNotInList(@Param("cityIds") List<Long> cityIds, Pageable pageable);
 
 }
