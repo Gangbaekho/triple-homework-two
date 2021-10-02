@@ -2,12 +2,13 @@ package com.nuitblanche.triple.controller;
 
 import com.nuitblanche.triple.dto.CityCreateRequestDto;
 import com.nuitblanche.triple.dto.CityCreateResponseDto;
+import com.nuitblanche.triple.dto.CityGetRequestDto;
+import com.nuitblanche.triple.dto.CityGetResponseDto;
 import com.nuitblanche.triple.service.CityService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/cities")
@@ -20,5 +21,11 @@ public class CityController {
     public CityCreateResponseDto createCity(@RequestBody CityCreateRequestDto requestDto){
 
         return cityService.createCity(requestDto);
+    }
+
+    @PostMapping("/list")
+    public List<CityGetResponseDto> getCities(@RequestBody CityGetRequestDto requestDto){
+
+        return cityService.getCities(requestDto);
     }
 }

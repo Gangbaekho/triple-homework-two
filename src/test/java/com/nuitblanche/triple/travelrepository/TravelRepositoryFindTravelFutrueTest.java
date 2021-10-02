@@ -63,8 +63,6 @@ public class TravelRepositoryFindTravelFutrueTest {
                 .build();
 
         cityRepository.save(cityFour);
-
-
     }
 
     @Test
