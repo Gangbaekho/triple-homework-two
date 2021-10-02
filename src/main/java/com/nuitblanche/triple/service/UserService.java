@@ -4,6 +4,7 @@ import com.nuitblanche.triple.domain.user.User;
 import com.nuitblanche.triple.domain.user.UserRepository;
 import com.nuitblanche.triple.dto.UserCreateRequestDto;
 import com.nuitblanche.triple.dto.UserCreateResponseDto;
+import com.nuitblanche.triple.exception.CUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ public class UserService {
         Boolean exists = userRepository.existsByName(requestDto.getName());
 
         if(exists){
-            throw new IllegalArgumentException("already exists user name : " + requestDto.getName());
+            throw new CUserNotFoundException("already exists user name : " + requestDto.getName());
         }
 
         User user = User.builder()

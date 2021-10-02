@@ -46,4 +46,22 @@ public class ExceptionHandlingConroller {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
+
+    @ExceptionHandler(CUserAlreadyExistsException.class)
+    public ResponseEntity<?> handleCUserAlreadyExistsException (CUserAlreadyExistsException e){
+
+        Map<String,String> message = new HashMap<>();
+        message.put("message",e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    }
+
+    @ExceptionHandler(CCityAlreadyExistsException.class)
+    public ResponseEntity<?> handleCCityAlreadyExistsException (CCityAlreadyExistsException e){
+
+        Map<String,String> message = new HashMap<>();
+        message.put("message",e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    }
 }
