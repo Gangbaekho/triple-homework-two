@@ -15,6 +15,6 @@ public interface TravelRepository extends JpaRepository<Travel,Long> {
     @Query(value = "SELECT t FROM Travel t JOIN FETCH t.city WHERE t.startDate <=:now AND t.endDate >=:now AND t.user.id=:userId ORDER BY t.startDate ASC")
     List<Travel> findTravelNowByUserIdAndLocalDate(@Param("userId") Long userId, @Param("now") LocalDate now);
 
-    @Query(value = "SELECT t FROM Travel t JOIN FETCH t.city WHERE t.startDate >=:now AND t.endDate >=:now AND t.user.id=:userId ORDER BY t.startDate ASC")
+    @Query(value = "SELECT t FROM Travel t JOIN FETCH t.city WHERE t.startDate >:now AND t.endDate >:now AND t.user.id=:userId ORDER BY t.startDate ASC")
     List<Travel> findTravelFutureByUserIdAndLocalDate(@Param("userId") Long userId, @Param("now") LocalDate now);
 }
