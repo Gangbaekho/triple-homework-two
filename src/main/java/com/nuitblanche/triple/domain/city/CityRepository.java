@@ -15,8 +15,8 @@ public interface CityRepository extends JpaRepository<City,Long> {
 
     Optional<City> findByName(String name);
 
-    @Query(value = "SELECT c FROM City c WHERE cast(c.createdDate as LocalDate) >=:weekAgo ORDER BY c.createdAt ASC")
-    List<City> findRegisteredCitiesWithInOneWeek(@Param("weekAgo") LocalDate weekAgo);
+    @Query(value = "SELECT c FROM City c WHERE cast(c.createdDate as LocalDate) >=:weekAgo AND cast(c.createdDate as LocalDate) >=:now  ORDER BY c.createdDate ASC")
+    List<City> findRegisteredCitiesWithInOneWeek(@Param("weekAgo") LocalDate weekAgo, @Param("now") LocalDate now);
 
     @Query(value = "SELECT c FROM City c WHERE c.id NOT IN (:cityIds)")
     List<City> findNotInList(@Param("cityIds") List<Long> cityIds, Pageable pageable);
