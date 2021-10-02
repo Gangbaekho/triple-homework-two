@@ -1,7 +1,11 @@
 package com.nuitblanche.triple.domain.city;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface CityRepository extends JpaRepository<City,Long> {
@@ -9,4 +13,8 @@ public interface CityRepository extends JpaRepository<City,Long> {
     Boolean existsByName(String name);
 
     Optional<City> findByName(String name);
+
+    @Query(value = "SELECT c FROM City c WHERE cast(c.createdDate as LocalDate) >=:sevenDaysAgo ORDER BY c.createdAt ASC")
+    List<City> findRegisteredCitiesWithInOneWeek(@Param("sevenDaysAgo") LocalDate sevenDaysAgo);
+
 }
