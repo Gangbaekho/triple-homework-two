@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/citylookuphistories")
 @RestController
-public class CityLookUpHistoryControler {
+public class CityLookUpHistoryController {
 
     private final CityLookUpHistoryService cityLookUpHistoryService;
 
