@@ -21,4 +21,7 @@ public interface CityRepository extends JpaRepository<City,Long> {
     @Query(value = "SELECT c FROM City c WHERE c.id NOT IN (:cityIds)")
     List<City> findNotInList(@Param("cityIds") List<Long> cityIds, Pageable pageable);
 
+    @Query(value = "SELECT c FROM City c WHERE c.id IN (SELECT clh.city.id FROM CityLookUpHistory clh WHERE clh.user.id=:userId AND cast(clh.createdDate as LocalDate)>=:weekAgo AND cast(clh.createdDate as LocalDate)<=:now GROUP BY clh.city.id HAVING COUNT(clh.id)=1 ORDER BY MAX(clh.createdDate) DESC)")
+    List<City> findByOneLookedUpWithInWeek(@Param("userId") Long userId, @Param("weekAgo") LocalDate weekAgo, @Param("now") LocalDate now);
+
 }

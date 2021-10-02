@@ -1,4 +1,4 @@
-package com.nuitblanche.triple.citylookuphistoryrepository;
+package com.nuitblanche.triple.cityrepository;
 
 import com.nuitblanche.triple.domain.city.City;
 import com.nuitblanche.triple.domain.city.CityRepository;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CityLookUpHistoryRepositoryFindOneLookedUpTest {
+public class CityRepositoryFindByOneLookedUpWithInWeekTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -73,22 +73,23 @@ public class CityLookUpHistoryRepositoryFindOneLookedUpTest {
         historyOne.updateCity(tokyoCity);
 
         CityLookUpHistory historyTwo =  new CityLookUpHistory();
-        historyOne.updateUser(user);
-        historyOne.updateCity(tokyoCity);
+        historyTwo.updateUser(user);
+        historyTwo.updateCity(tokyoCity);
 
         cityLookUpHistoryRepository.save(historyOne);
         cityLookUpHistoryRepository.save(historyTwo);
 
         CityLookUpHistory historyThree =  new CityLookUpHistory();
-        historyOne.updateUser(user);
-        historyOne.updateCity(seoulCity);
+        historyThree.updateUser(user);
+        historyThree.updateCity(seoulCity);
 
         cityLookUpHistoryRepository.save(historyThree);
 
         LocalDate now = LocalDate.now();
         LocalDate weekAgo = now.minusDays(7L);
-        List<CityLookUpHistory> cityLookUpHistories = cityLookUpHistoryRepository.findByOneLookedUpWithInWeek(user.getId(),weekAgo,now);
-        assertThat(cityLookUpHistories.size()).isEqualTo(1);
+        List<City> cities = cityRepository.findByOneLookedUpWithInWeek(user.getId(),weekAgo,now);
+        assertThat(cities.size()).isEqualTo(1);
+        assertThat(cities.get(0).getName()).isEqualTo(seoul);
 
     }
 
@@ -113,16 +114,17 @@ public class CityLookUpHistoryRepositoryFindOneLookedUpTest {
         cityLookUpHistoryRepository.save(historyOne);
 
         CityLookUpHistory historyTwo =  new CityLookUpHistory();
-        historyOne.updateUser(user);
-        historyOne.updateCity(seoulCity);
+        historyTwo.updateUser(user);
+        historyTwo.updateCity(seoulCity);
 
         cityLookUpHistoryRepository.save(historyTwo);
 
         LocalDate now = LocalDate.now();
         LocalDate weekAgo = now.minusDays(7L);
-        List<CityLookUpHistory> cityLookUpHistories = cityLookUpHistoryRepository.findByOneLookedUpWithInWeek(user.getId(),weekAgo,now);
-        assertThat(cityLookUpHistories.size()).isEqualTo(2);
-        assertThat(cityLookUpHistories.get(0).getCity().getName()).isEqualTo(seoul);
+        List<City> cities = cityRepository.findByOneLookedUpWithInWeek(user.getId(),weekAgo,now);
+        assertThat(cities.size()).isEqualTo(2);
+        assertThat(cities.get(0).getName()).isEqualTo(seoul);
+
     }
 
     @After

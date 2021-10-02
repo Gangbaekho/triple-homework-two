@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface CityLookUpHistoryRepository extends JpaRepository<CityLookUpHistory, Long> {
 
-    @Query(value = "SELECT c FROM CityLookUpHistory c LEFT JOIN FETCH c.city WHERE c.user.id=:userId AND cast(c.createdDate as LocalDate) >=:weekAgo AND cast(c.createdDate as LocalDate) <=:now GROUP BY c.city.id HAVING count(c.id) = 1 ORDER BY c.id DESC")
-    List<CityLookUpHistory> findByOneLookedUpWithInWeek(@Param("userId") Long userId,@Param("weekAgo")LocalDate weekAgo, @Param("now") LocalDate now);
+
+    @Query(value = "SELECT clh.city.id FROM CityLookUpHistory clh WHERE clh.user.id=:userId AND cast(clh.createdDate as LocalDate)>=:weekAgo AND cast(clh.createdDate as LocalDate)<=:now GROUP BY clh.city.id HAVING COUNT(clh.id)=1")
+    List<Long> test(@Param("userId") Long userId,@Param("weekAgo")LocalDate weekAgo, @Param("now") LocalDate now);
 }
